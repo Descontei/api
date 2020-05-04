@@ -74,7 +74,7 @@ class ProductCreate(ProductBase):
 
 class Product(ProductBase):
     id: int
-    seller: Store
+    seller: Store = None
 
     class Config:
         orm_mode = True

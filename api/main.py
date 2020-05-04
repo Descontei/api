@@ -33,7 +33,7 @@ def home():
     """
     return "Welcome home!"
 
-
+# *** REGIONS ***
 @app.post("/regions/", response_model=schemas.Region)
 def create_region(region: schemas.RegionCreate, db: Session = Depends(get_db)):
     """
@@ -54,7 +54,7 @@ def read_region(region_id: int, db: Session = Depends(get_db)):
 def list_regions(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud.get_regions(db, skip, limit)
 
-
+# *** CATEGORIES ***
 @app.get("/categories/", response_model=List[schemas.Category])
 def list_categories(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud.get_categories(db, skip, limit)
@@ -75,17 +75,14 @@ def create_category(category: schemas.CategoryCreate, db: Session = Depends(get_
     """
     return crud.create_category(db=db, category=category)
 
-
+# *** STORES ***
 @app.get("/stores/", response_model=List[schemas.Store])
 def list_categories(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud.get_stores(db, skip, limit)
 
 
 @app.get("/stores/{store_id}", response_model=schemas.Store)
-def read_region(store_id: int, db: Session = Depends(get_db)):
-    """
-    List a category
-    """
+def read_product(store_id: int, db: Session = Depends(get_db)):
     return crud.get_store(db, store_id)
 
 
@@ -96,7 +93,24 @@ def create_category(store: schemas.StoreCreate, db: Session = Depends(get_db)):
     """
     return crud.create_store(db=db, store=store)
 
+# *** PRODUCTS ***
 
+@app.get("/products/", response_model=List[schemas.Product])
+def list_products(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    return crud.get_products(db, skip, limit)
+
+
+@app.get("/products/{product_id}", response_model=schemas.Product)
+def read_product(product_id: int, db: Session = Depends(get_db)):
+    return crud.get_product(db, product_id)
+
+
+@app.post("/products/", response_model=schemas.Product)
+def create_category(product: schemas.ProductCreate, db: Session = Depends(get_db)):
+    return crud.create_product(db=db, product=product)
+
+
+# *** USERS ***
 @app.post("/users/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     """

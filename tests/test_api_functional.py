@@ -82,3 +82,16 @@ def test_stores():
     response = client.get("/stores/")
     assert response.status_code == 200
     assert len(response.json()) == 1
+
+def test_product():
+    payload = {"name": "pão", "price": 1.95, "seller_id": 1}
+
+    response = client.post("/products/", json=payload)
+    assert response.status_code == 200
+
+    response = client.get("/products/1")
+    assert response.status_code == 200
+
+    response = client.get("/products/")
+    assert response.status_code == 200
+    assert len(response.json()) == 1
