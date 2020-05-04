@@ -33,6 +33,7 @@ def home():
     """
     return "Welcome home!"
 
+
 # *** REGIONS ***
 @app.post("/regions/", response_model=schemas.Region)
 def create_region(region: schemas.RegionCreate, db: Session = Depends(get_db)):
@@ -53,6 +54,7 @@ def read_region(region_id: int, db: Session = Depends(get_db)):
 @app.get("/regions/", response_model=List[schemas.Region])
 def list_regions(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud.get_regions(db, skip, limit)
+
 
 # *** CATEGORIES ***
 @app.get("/categories/", response_model=List[schemas.Category])
@@ -75,6 +77,7 @@ def create_category(category: schemas.CategoryCreate, db: Session = Depends(get_
     """
     return crud.create_category(db=db, category=category)
 
+
 # *** STORES ***
 @app.get("/stores/", response_model=List[schemas.Store])
 def list_categories(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
@@ -93,7 +96,9 @@ def create_category(store: schemas.StoreCreate, db: Session = Depends(get_db)):
     """
     return crud.create_store(db=db, store=store)
 
+
 # *** PRODUCTS ***
+
 
 @app.get("/products/", response_model=List[schemas.Product])
 def list_products(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
@@ -122,6 +127,11 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Mobile number already registered")
 
     return crud.create_user(db=db, user=user)
+
+
+@app.get("/users/{user_id}", response_model=schemas.User)
+def read_user(user_id: int, db: Session = Depends(get_db)):
+    return crud.get_user(db, user_id)
 
 
 @app.get("/users/", response_model=List[schemas.User])
