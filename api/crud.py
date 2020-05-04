@@ -34,11 +34,30 @@ def get_categories(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Category).offset(skip).limit(limit).all()
 
 
+def create_category(db: Session, category: schemas.CategoryCreate):
+    """
+    creates a new category
+    """
+    db_category = models.Category(**category.dict())
+    db.add(db_category)
+    db.commit()
+    db.refresh(db_category)
+
+    return db_category
+
+
 def get_user(db: Session, user_id: int):
     """
     Searches for an specific user by ID
     """
     return db.query(models.User).filter(models.User.id == user_id).first()
+
+
+def get_user_by_mobile(db: Session, mobile: int):
+    """
+    Searches for an user by its mobile phone number
+    """
+    return db.query(models.User).filter(models.User.mobile == mobile).first()
 
 
 def get_users(db: Session, skip: int = 0, limit: int = 100):
