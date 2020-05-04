@@ -47,6 +47,14 @@ def test_create_category():
     response = client.post("/categories/", json=payload)
     assert response.status_code == 200
 
+    response = client.get("/categories/1")
+    assert response.status_code == 200
+    assert response.json().get("name") == "pãodaria"
+
+    response = client.get("/categories")
+    assert response.status_code == 200
+    assert len(response.json()) == 1
+
 
 def test_regions():
     payload = {"name": "brás"}

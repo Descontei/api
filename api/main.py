@@ -41,16 +41,32 @@ def create_region(region: schemas.RegionCreate, db: Session = Depends(get_db)):
     """
     return crud.create_region(db, region)
 
+
 @app.get("/regions/{region_id}", response_model=schemas.Region)
 def read_region(region_id: int, db: Session = Depends(get_db)):
     """
-    List a new region
+    List a region
     """
     return crud.get_region(db, region_id)
+
 
 @app.get("/regions/", response_model=List[schemas.Region])
 def list_regions(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud.get_regions(db, skip, limit)
+
+
+@app.get("/categories/", response_model=List[schemas.Category])
+def list_categories(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    return crud.get_categories(db, skip, limit)
+
+
+@app.get("/categories/{category_id}", response_model=schemas.Category)
+def read_region(category_id: int, db: Session = Depends(get_db)):
+    """
+    List a category
+    """
+    return crud.get_category(db, category_id)
+
 
 @app.post("/categories/", response_model=schemas.Category)
 def create_category(category: schemas.CategoryCreate, db: Session = Depends(get_db)):
