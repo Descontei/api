@@ -44,9 +44,10 @@ class Store(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
-    region = relationship("Region")
+    region_id = Column(Integer, ForeignKey("regions"))
     category_id = Column(Integer, ForeignKey("categories.id"))
 
+    region = relationship("Region", back_populates="stores")
     category = relationship("Category", back_populates="stores")
     products = relationship("Product", back_populates="seller")
     orders = relationship("Order", back_populates="store")
