@@ -6,6 +6,8 @@ from sqlalchemy.orm import relationship
 
 from .database import Base
 
+# pylint: disable=too-few-public-methods,invalid-name,missing-docstring
+
 
 class Region(Base):
     """
@@ -18,6 +20,8 @@ class Region(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True)
 
+    stores = relationship("Store", back_populates="region")
+
 
 class Category(Base):
     """
@@ -28,7 +32,7 @@ class Category(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True)
 
-    store = relationship("Store", back_populates="category")
+    stores = relationship("Store", back_populates="category")
 
 
 class Store(Base):
@@ -44,6 +48,8 @@ class Store(Base):
     category_id = Column(Integer, ForeignKey("categories.id"))
 
     category = relationship("Category", back_populates="stores")
+    products = relationship("Product", back_populates="seller")
+    orders = relationship("Order", back_populates="store")
 
 
 class Product(Base):
@@ -70,6 +76,11 @@ order_products = Table(
 class Order(Base):
     id = Column(Integer, primary_key=True, index=True)
     store_id = Column(Integer, ForeignKey("stores.id"))
+    user_id = Column(Integer, ForeignKey("users.id"))
+    products = relationship("Product", secondary=order_products)
+
+    user = relationship("User", back_populates="orders")
+    store = relationship("Store", back_populates="orders")
 
 
 user_stores = Table(
@@ -89,4 +100,6 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
     mobile = Column(String, index=True)
+
     stores = relationship("Store", secondary=user_stores)
+    orders = relationship("Order", back_populates="user")
