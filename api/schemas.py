@@ -56,7 +56,7 @@ class StoreCreate(StoreBase):
 class Store(StoreBase):
     id: int
     products: List["Product"] = []
-    orders: List["Orders"] = []
+    orders: List["Order"] = []
 
     class Config:
         orm_mode = True
@@ -93,8 +93,8 @@ class OrderCreate(OrderBase):
 class Order(OrderBase):
     id: int
     products: List[Product] = []
-    user: "User"
-    store: Store
+    user: "User" = None
+    store: Store = None
 
     class Config:
         orm_mode = True
@@ -114,3 +114,14 @@ class User(UserBase):
     id: int
     stores: List[Store]
     orders: List[Order]
+
+    class Config:
+        orm_mode = True
+
+
+Category.update_forward_refs()
+Order.update_forward_refs()
+Product.update_forward_refs()
+Region.update_forward_refs()
+Store.update_forward_refs()
+User.update_forward_refs()
