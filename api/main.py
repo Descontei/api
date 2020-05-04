@@ -26,6 +26,22 @@ def get_db():
         db.close()
 
 
+@app.get("/")
+def home():
+    """
+    Root route
+    """
+    return "Welcome home!"
+
+
+@app.post("/regions/", response_model=schemas.Region)
+def create_region(region: schemas.RegionCreate, db: Session = Depends(get_db)):
+    """
+    POST for a new region
+    """
+    return crud.create_region(db, region)
+
+
 @app.post("/categories/", response_model=schemas.Category)
 def create_category(category: schemas.CategoryCreate, db: Session = Depends(get_db)):
     """

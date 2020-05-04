@@ -20,6 +20,19 @@ def get_regions(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Region).offset(skip).limit(limit).all()
 
 
+def create_region(db: Session, region: schemas.RegionCreate):
+    """
+    creates a new region from a valid pydantic schema
+    """
+    db_region = models.Region(**region.dict())
+    db.add(db_region)
+    db.commit()
+
+    db.refresh(db_region)
+
+    return db_region
+
+
 def get_category(db: Session, category_id: int):
     """
     Searches for an specific category by ID
