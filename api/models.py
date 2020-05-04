@@ -44,7 +44,7 @@ class Store(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
-    region_id = Column(Integer, ForeignKey("regions"))
+    region_id = Column(Integer, ForeignKey("regions.id"))
     category_id = Column(Integer, ForeignKey("categories.id"))
 
     region = relationship("Region", back_populates="stores")
@@ -75,6 +75,12 @@ order_products = Table(
 
 
 class Order(Base):
+    """
+    Model for Order
+    """
+
+    __tablename__ = "orders"
+
     id = Column(Integer, primary_key=True, index=True)
     store_id = Column(Integer, ForeignKey("stores.id"))
     user_id = Column(Integer, ForeignKey("users.id"))
@@ -88,7 +94,7 @@ user_stores = Table(
     "user_stores",
     Base.metadata,
     Column("user_id", Integer, ForeignKey("users.id")),
-    Column("store_id", Integer, ForeignKey("store.id")),
+    Column("store_id", Integer, ForeignKey("stores.id")),
 )
 
 
@@ -100,7 +106,7 @@ class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
-    mobile = Column(String, index=True)
+    mobile = Column(String, index=True, unique=True)
 
     stores = relationship("Store", secondary=user_stores)
     orders = relationship("Order", back_populates="user")
