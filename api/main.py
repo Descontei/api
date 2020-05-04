@@ -76,6 +76,27 @@ def create_category(category: schemas.CategoryCreate, db: Session = Depends(get_
     return crud.create_category(db=db, category=category)
 
 
+@app.get("/stores/", response_model=List[schemas.Store])
+def list_categories(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    return crud.get_stores(db, skip, limit)
+
+
+@app.get("/stores/{store_id}", response_model=schemas.Store)
+def read_region(store_id: int, db: Session = Depends(get_db)):
+    """
+    List a category
+    """
+    return crud.get_store(db, store_id)
+
+
+@app.post("/stores/", response_model=schemas.Store)
+def create_category(store: schemas.StoreCreate, db: Session = Depends(get_db)):
+    """
+    Creates a new category from a valid pydantic schema input
+    """
+    return crud.create_store(db=db, store=store)
+
+
 @app.post("/users/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     """

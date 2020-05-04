@@ -68,3 +68,17 @@ def test_regions():
     response = client.get("/regions/")
     assert response.status_code == 200
     assert len(response.json()) == 1
+
+
+def test_stores():
+    payload = {"name": "brás", "region_id": 1, "category_id": 1}
+
+    response = client.post("/stores/", json=payload)
+    assert response.status_code == 200
+
+    response = client.get("/stores/1")
+    assert response.status_code == 200
+
+    response = client.get("/stores/")
+    assert response.status_code == 200
+    assert len(response.json()) == 1
