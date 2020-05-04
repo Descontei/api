@@ -1,5 +1,6 @@
 """
 Provides simple functional tests for the main API
+very very bad test design but keep in mind this is HACKATHON CODE
 """
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
@@ -47,8 +48,15 @@ def test_create_category():
     assert response.status_code == 200
 
 
-def test_create_region():
+def test_regions():
     payload = {"name": "brás"}
 
     response = client.post("/regions/", json=payload)
     assert response.status_code == 200
+
+    response = client.get("/regions/1")
+    assert response.status_code == 200
+
+    response = client.get("/regions/")
+    assert response.status_code == 200
+    assert len(response.json()) == 1
