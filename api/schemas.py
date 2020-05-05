@@ -67,7 +67,6 @@ class ProductBase(BaseModel):
     name: str
     price: float
     image: str
-    seller_id: int
 
 
 class ProductCreate(ProductBase):
@@ -89,7 +88,7 @@ class OrderBase(BaseModel):
 
 
 class OrderCreate(OrderBase):
-    products: List[Product] = None
+    products: List[Product] = []
 
 
 class Order(OrderBase):
@@ -114,8 +113,8 @@ class UserCreate(UserBase):
 
 class User(UserBase):
     id: int
-    stores: List[Store]
-    orders: List[Order]
+    stores: List[Store] = []
+    orders: List[Order] = []
 
     class Config:
         orm_mode = True
