@@ -66,6 +66,7 @@ class Store(StoreBase):
 class ProductBase(BaseModel):
     name: str
     price: float
+    image: str
 
 
 class ProductCreate(ProductBase):
@@ -87,7 +88,7 @@ class OrderBase(BaseModel):
 
 
 class OrderCreate(OrderBase):
-    pass
+    products: List[Product] = None
 
 
 class Order(OrderBase):

@@ -92,6 +92,27 @@ def create_product(db: Session, product: schemas.ProductCreate):
 
     return db_product
 
+# *** ORDER
+def create_order(db: Session, order: schemas.OrderCreate):
+    order_data = order.dict()
+    product_ids = order_data.pop("products")
+
+    db_order = models.Order(**order_data)
+    db.add(db_order)
+    db.commit()
+    db.refresh(db_order)
+
+    #for product_id in product_ids:
+    #    pass
+        # product = get_product(db, product_id)
+        # db_order.products.append(product)
+
+    # db.add(db_order)
+    # db.commit()
+    # db.refresh(db_order)
+
+    return db_order
+
 
 def get_user(db: Session, user_id: int):
     """

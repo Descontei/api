@@ -61,6 +61,7 @@ class Product(Base):
     __tablename__ = "products"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
+    image = Column(String)
     price = Column(Float)
     seller_id = Column(Integer, ForeignKey("stores.id"))
     seller = relationship("Store", back_populates="products")

@@ -85,7 +85,7 @@ def test_stores():
 
 
 def test_product():
-    payload = {"name": "pão", "price": 1.95, "seller_id": 1}
+    payload = {"name": "pão", "price": 1.95, "seller_id": 1, "image": "potato.com/potato.jpg"}
 
     response = client.post("/products/", json=payload)
     assert response.status_code == 200
@@ -120,4 +120,14 @@ def test_user():
 
 
 def test_order():
-    pass
+    payload = {"store_id": 1, "user_id": 1, "products": [{"id": 1, "seller_id": 1}]}
+    response = client.post("/orders/", json=payload)
+    assert response.status_code == 200
+
+    # response = client.get("/orders/1")
+    # assert response.status_code == 200
+    # data = response.json()
+
+    # response = client.get("/orders/")
+    # assert response.status_code == 200
+    # assert len(response.json()) == 1

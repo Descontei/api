@@ -98,8 +98,6 @@ def create_category(store: schemas.StoreCreate, db: Session = Depends(get_db)):
 
 
 # *** PRODUCTS ***
-
-
 @app.get("/products/", response_model=List[schemas.Product])
 def list_products(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud.get_products(db, skip, limit)
@@ -113,6 +111,12 @@ def read_product(product_id: int, db: Session = Depends(get_db)):
 @app.post("/products/", response_model=schemas.Product)
 def create_category(product: schemas.ProductCreate, db: Session = Depends(get_db)):
     return crud.create_product(db=db, product=product)
+
+
+# ***ORDERS ***
+@app.post("/orders/", response_model=schemas.Order)
+def create_order(order: schemas.OrderCreate, db: Session = Depends(get_db)):
+    return crud.create_order(db=db, order=order)
 
 
 # *** USERS ***
