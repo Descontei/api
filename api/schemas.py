@@ -67,6 +67,7 @@ class ProductBase(BaseModel):
     name: str
     price: float
     image: str
+    seller_id: int
 
 
 class ProductCreate(ProductBase):
